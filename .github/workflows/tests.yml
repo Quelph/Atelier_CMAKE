@@ -4,9 +4,6 @@ on: push
 
 jobs:
 
-  # ------------------------------
-  #   JOB 1 : Compilation globale
-  # ------------------------------
   Compilation:
     runs-on: ubuntu-latest
     steps:
@@ -20,90 +17,76 @@ jobs:
           cmake ..
           make
 
-  # ------------------------------
-  #   JOB 2 : Test ADD
-  # ------------------------------
+
   Test_Add:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Test fonction add
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Test ADD
         run: |
-          last_directory=$(basename ${{ runner.workspace }})
-          git clone https://github.com/${{ github.repository }}.git
-          cd ./$last_directory
           mkdir build
           cd build
           cmake ..
           make
           ./calculator add 10 5
 
-  # ------------------------------
-  #   JOB 3 : Test SUB
-  # ------------------------------
+
   Test_Sub:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Test fonction sub
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Test SUB
         run: |
-          last_directory=$(basename ${{ runner.workspace }})
-          git clone https://github.com/${{ github.repository }}.git
-          cd ./$last_directory
           mkdir build
           cd build
           cmake ..
           make
           ./calculator sub 10 5
 
-  # ------------------------------
-  #   JOB 4 : Test MUL
-  # ------------------------------
+
   Test_Mul:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Test fonction mul
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Test MUL
         run: |
-          last_directory=$(basename ${{ runner.workspace }})
-          git clone https://github.com/${{ github.repository }}.git
-          cd ./$last_directory
           mkdir build
           cd build
           cmake ..
           make
           ./calculator mul 4 5
 
-  # ------------------------------
-  #   JOB 5 : Test DIV
-  # ------------------------------
+
   Test_Div:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Test fonction div
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Test DIV
         run: |
-          last_directory=$(basename ${{ runner.workspace }})
-          git clone https://github.com/${{ github.repository }}.git
-          cd ./$last_directory
           mkdir build
           cd build
           cmake ..
           make
           ./calculator div 20 5
 
-  # ------------------------------
-  #   JOB 6 : Test CAR (nouvelle fonction)
-  # ------------------------------
+
   Test_Car:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Test fonction car
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Test CAR
         run: |
-          last_directory=$(basename ${{ runner.workspace }})
-          git clone https://github.com/${{ github.repository }}.git
-          cd ./$last_directory
           mkdir build
           cd build
           cmake ..
