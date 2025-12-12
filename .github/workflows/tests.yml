@@ -9,86 +9,106 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        # Laissez submodules: true si le dossier 'src/lib' est un sous-module git
+        # with:
+        #   submodules: true 
 
-      - name: Compilation
+      - name: Configuration et Compilation
         run: |
+          # 1. Préparation de la compilation
           mkdir build
           cd build
+          
+          # 2. Exécution de CMake
+          # Note : Si vous corrigez le CMakeLists.txt de la racine pour utiliser 'add_subdirectory(src)', cette étape fonctionnera.
           cmake ..
+          
+          # 3. Compilation du projet
           make
+          
+      - name: Sauvegarder l'exécutable 'calculator' comme artefact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: build/calculator
+          # Assurez-vous que le chemin 'build/calculator' pointe vers votre binaire !
 
 
   Test_Add:
     runs-on: ubuntu-latest
-    needs: Compilation
+    needs: Compilation # Dépend de la compilation réussie
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
+      - name: Télécharger l'exécutable
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          
+      - name: Rendre l'exécutable
+        run: chmod +x calculator
+          
       - name: Test ADD
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
-          ./calculator add 10 5
+        run: ./calculator add 10 5
 
 
   Test_Sub:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Télécharger l'exécutable
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          
+      - name: Rendre l'exécutable
+        run: chmod +x calculator
+          
       - name: Test SUB
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
-          ./calculator sub 10 5
+        run: ./calculator sub 10 5
 
 
   Test_Mul:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Télécharger l'exécutable
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          
+      - name: Rendre l'exécutable
+        run: chmod +x calculator
+          
       - name: Test MUL
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
-          ./calculator mul 4 5
+        run: ./calculator mul 4 5
 
 
   Test_Div:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Télécharger l'exécutable
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          
+      - name: Rendre l'exécutable
+        run: chmod +x calculator
+          
       - name: Test DIV
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
-          ./calculator div 20 5
+        run: ./calculator div 20 5
 
 
   Test_Car:
     runs-on: ubuntu-latest
     needs: Compilation
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Télécharger l'exécutable
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          
+      - name: Rendre l'exécutable
+        run: chmod +x calculator
+          
       - name: Test CAR
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
-          ./calculator car 5
+        run: ./calculator car 5
