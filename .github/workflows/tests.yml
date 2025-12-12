@@ -8,38 +8,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-        # Laissez submodules: true si le dossier 'src/lib' est un sous-module git
-        # with:
-        #   submodules: true 
+        uses: actions/checkout@v4 # Bonne pratique : passer en v4
 
       - name: Configuration et Compilation
         run: |
-          # 1. Préparation de la compilation
+          # Rappel : assurez-vous que votre CMakeLists.txt racine utilise 'add_subdirectory(src)'
           mkdir build
           cd build
-          
-          # 2. Exécution de CMake
-          # Note : Si vous corrigez le CMakeLists.txt de la racine pour utiliser 'add_subdirectory(src)', cette étape fonctionnera.
           cmake ..
-          
-          # 3. Compilation du projet
           make
           
       - name: Sauvegarder l'exécutable 'calculator' comme artefact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # <-- CORRIGÉ : Utilisation de v4
         with:
           name: build-artifacts
-          path: build/calculator
+          path: build/calculator 
           # Assurez-vous que le chemin 'build/calculator' pointe vers votre binaire !
 
 
   Test_Add:
     runs-on: ubuntu-latest
-    needs: Compilation # Dépend de la compilation réussie
+    needs: Compilation
     steps:
       - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 # <-- CORRIGÉ : Utilisation de v4
         with:
           name: build-artifacts
           
@@ -55,7 +47,7 @@ jobs:
     needs: Compilation
     steps:
       - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 # <-- CORRIGÉ : Utilisation de v4
         with:
           name: build-artifacts
           
@@ -71,7 +63,7 @@ jobs:
     needs: Compilation
     steps:
       - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 # <-- CORRIGÉ : Utilisation de v4
         with:
           name: build-artifacts
           
@@ -87,7 +79,7 @@ jobs:
     needs: Compilation
     steps:
       - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 # <-- CORRIGÉ : Utilisation de v4
         with:
           name: build-artifacts
           
@@ -103,7 +95,7 @@ jobs:
     needs: Compilation
     steps:
       - name: Télécharger l'exécutable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 # <-- CORRIGÉ : Utilisation de v4
         with:
           name: build-artifacts
           
